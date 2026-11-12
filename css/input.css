@@ -1,0 +1,192 @@
+@import "tailwindcss";
+
+/* Скажем Tailwind, где искать использованные классы */
+@source "../";
+
+@theme {
+  --color-brand: #c2703e;
+  --color-brand-strong: #a5572c;
+  --color-brand-soft: #f9ece1;
+  --color-ink: #1e293b;
+  --color-ink-soft: #52637a;
+  --color-ink-faint: #8494a9;
+  --color-paper: #f8fafc;
+  --color-line: #e7e0d8;
+  --color-wa: #25d366;
+  --color-tg: #229ed9;
+
+  --font-sans: "Manrope", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  overflow-x: clip;
+}
+
+body {
+  font-size: 16px;
+  text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
+  color-scheme: light;
+}
+
+::selection {
+  background: rgba(194, 112, 62, 0.22);
+}
+
+:focus-visible {
+  outline: 3px solid rgba(194, 112, 62, 0.5);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ── Scroll reveal ──────────────────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.reveal-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Keyframes ──────────────────────────────────────────────────────────── */
+@keyframes menu-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.menu-in { animation: menu-in 0.4s cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+
+@keyframes item-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+.item-in { animation: item-in 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+
+@keyframes sheet-in {
+  from { opacity: 0; transform: translateY(28px) scale(0.99); }
+  to { opacity: 1; transform: none; }
+}
+.sheet-in { animation: sheet-in 0.35s cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.fade-in { animation: fade-in 0.3s ease both; }
+
+@keyframes ring-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(194, 112, 62, 0.4); }
+  70% { box-shadow: 0 0 0 15px rgba(194, 112, 62, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(194, 112, 62, 0); }
+}
+.pulse-soft { animation: ring-pulse 2.8s ease-out infinite; }
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.float-y { animation: float-y 6s ease-in-out infinite; }
+
+@keyframes js-spin {
+  to { transform: rotate(360deg); }
+}
+.js-spin { animation: js-spin 1s linear infinite; }
+
+/* ── Текстуры ───────────────────────────────────────────────────────────── */
+.dots-texture {
+  background-image: radial-gradient(rgba(30, 41, 59, 0.08) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+.dots-light {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Липкая шапка: состояние прокрутки ──────────────────────────────────── */
+#site-header.is-scrolled .main-bar {
+  border-color: #e7e0d8;
+  background-color: rgba(255, 255, 255, 0.92);
+  box-shadow:
+    0 10px 15px -3px rgba(30, 41, 59, 0.05),
+    0 4px 6px -4px rgba(30, 41, 59, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* ── FAQ-аккордеон (зеркалит grid-rows анимацию из Tailwind) ────────────── */
+.faq-answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease-out;
+}
+.faq-item.faq-open .faq-answer { grid-template-rows: 1fr; }
+.faq-answer > div { overflow: hidden; }
+.faq-item.faq-open {
+  border-color: rgba(194, 112, 62, 0.4);
+  box-shadow:
+    0 10px 15px -3px rgba(30, 41, 59, 0.06),
+    0 4px 6px -4px rgba(30, 41, 59, 0.06);
+}
+.faq-item.faq-open .faq-icon {
+  transform: rotate(180deg);
+  background: #c2703e;
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: none;
+}
+.faq-item.faq-open .faq-dot { background: #c2703e; }
+
+/* ── Калькулятор: состояния карточек ───────────────────────────────────── */
+.calc-row { transition: border-color 0.3s, box-shadow 0.3s; }
+.calc-row:not(.is-on):hover { border-color: rgba(194, 112, 62, 0.35); }
+.calc-row.is-on {
+  border-color: #c2703e;
+  box-shadow:
+    0 10px 15px -3px rgba(194, 112, 62, 0.12),
+    0 4px 6px -4px rgba(194, 112, 62, 0.12);
+}
+.calc-check { transition: background-color 0.2s, border-color 0.2s, color 0.2s; }
+.calc-input:checked + .calc-check {
+  background: #c2703e;
+  border-color: #c2703e;
+  color: #ffffff;
+}
+.calc-row:not(.is-on) .calc-sum { visibility: hidden; }
+.calc-qty-btn:disabled { opacity: 0.35; pointer-events: none; }
+
+/* ── Поля ввода ─────────────────────────────────────────────────────────── */
+.lead-input:focus {
+  border-color: #c2703e;
+  background-color: #ffffff;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .pulse-soft, .float-y, .menu-in, .item-in, .sheet-in, .fade-in, .js-spin {
+    animation: none !important;
+  }
+  .faq-answer { transition: none; }
+}
